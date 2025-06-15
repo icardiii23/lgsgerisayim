@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LGS Geri Sayım</title>
+  <title>LGS Sonuçlarına Geri Sayım</title>
   <style>
     body {
       margin: 0;
@@ -95,10 +95,52 @@
         transform: scale(1);
       }
     }
+
+    #intro-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #intro-modal button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #00c6ff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #intro-modal button:hover {
+      background-color: #0074D9;
+    }
   </style>
 </head>
 <body>
-  <h1>LGS 2025'e Kalan Süre</h1>
+  <div id="intro-modal">
+    <h2 id="intro-text">
+ İyisiyle kötüsüyle bir sınavı daha geride bıraktık. Herkese geçmiş olsun.<br><br>
+    "Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir." -Mustafa Kemal Atatürk-<br><br>
+      "Yine söylüyorum kazanacaksınız, kazanmak için uğraşacaksınız ama netice ne olursa olsun siz benim gönlümde hep kazandınız hep şampiyonsunuz ve öyle kalacaksınız." -Fatih Terim-
+    </h2>
+    <button onclick="closeIntro()">Tamam</button>
+  </div>
+
+  <h1>LGS 2025 Sonuçlarının Açıklanmasına Kalan Süre</h1>
   <div class="countdown">
     <div class="time-box">
       <div id="days">0</div>
@@ -130,18 +172,18 @@
       if (el.textContent != value) {
         el.textContent = value;
         el.classList.remove("zoom");
-        void el.offsetWidth; // yeniden başlatmak için
+        void el.offsetWidth; // animasyonu yeniden başlatır
         el.classList.add("zoom");
       }
     };
 
     const countdown = () => {
-      const examDate = new Date("June 15, 2025 09:30:00").getTime();
+      const examDate = new Date("July 11, 2025 09:30:00").getTime();
       const now = new Date().getTime();
       const diff = examDate - now;
 
       if (diff <= 0) {
-        document.querySelector(".countdown").innerHTML = "<h2>Başarılar! 🎉</h2>";
+        document.querySelector(".countdown").innerHTML = "<h2>Herkese Geçmiş Olsun</h2>";
         return;
       }
 
@@ -156,8 +198,20 @@
       animate(elements.seconds, s);
     };
 
-    countdown();
-    setInterval(countdown, 1000);
+    function closeIntro() {
+      document.getElementById("intro-modal").style.display = "none";
+      localStorage.setItem("introShown", "true");
+    }
+
+    // Giriş ekranı daha önce gösterildiyse bir daha gösterme
+    window.onload = function () {
+      if (localStorage.getItem("introShown") === "true") {
+        document.getElementById("intro-modal").style.display = "none";
+      }
+
+      countdown();
+      setInterval(countdown, 1000);
+    };
   </script>
 </body>
 </html>
