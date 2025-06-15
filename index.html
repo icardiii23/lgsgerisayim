@@ -111,6 +111,14 @@
       z-index: 9999;
       text-align: center;
       padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #intro-text {
+      font-size: 1rem;
+      max-width: 90%;
+      line-height: 1.5;
+      word-wrap: break-word;
     }
 
     #intro-modal button {
@@ -129,18 +137,25 @@
       background-color: #0074D9;
     }
 
-    #intro-text {
-  font-size: 1.1rem;
-}
+    @media (max-width: 500px) {
+      #intro-text {
+        font-size: 0.95rem;
+      }
 
+      #intro-modal button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="intro-modal">
-    <h2 id="intro-text">
- İyisiyle kötüsüyle bir sınavı daha geride bıraktık. Herkese geçmiş olsun.<br><br>
-    "Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir." -Mustafa Kemal Atatürk-
-    </h2>
+    <p id="intro-text">
+      İyisiyle kötüsüyle bir sınavı daha geride bıraktık. Herkese geçmiş olsun.<br><br>
+      "Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir."<br>
+       –Mustafa Kemal Atatürk-
+    </p>
     <button onclick="closeIntro()">Tamam</button>
   </div>
 
@@ -207,7 +222,6 @@
       localStorage.setItem("introShown", "true");
     }
 
-    // Giriş ekranı daha önce gösterildiyse bir daha gösterme
     window.onload = function () {
       if (localStorage.getItem("introShown") === "true") {
         document.getElementById("intro-modal").style.display = "none";
